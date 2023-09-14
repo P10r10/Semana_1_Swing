@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,13 +44,10 @@ public class Exer2 {
                     currentImage--;
                 }
                 if (currentImage == -1) {
-                    lbImage.setIcon(null);
-                    lbImage.setText("Fim das imagens :(");
-                    lbFile.setText(" ");
+                    clearImage(lbImage, lbFile);
                 }
                 if (currentImage >= 0) {
-                    lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
-                    lbFile.setText(files[currentImage].getName());
+                    setImage(lbImage, lbFile, files);
                 }
             }
         });
@@ -59,20 +55,28 @@ public class Exer2 {
         btRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentImage != 3) {
+                if (currentImage != 3) { // review hardcoded 3
                     currentImage++;
                 }
                 if (currentImage == 3) {
-                    lbImage.setIcon(null);
-                    lbImage.setText("Fim das imagens :(");
-                    lbFile.setText(" ");
+                    clearImage(lbImage, lbFile);
                 }
                 if (currentImage <= 2) {
-                    lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
-                    lbFile.setText(files[currentImage].getName());
+                    setImage(lbImage, lbFile, files);
                 }
             }
         });
+    }
+
+    private void clearImage(JLabel lbImage, JLabel lbFile) {
+        lbImage.setIcon(null);
+        lbImage.setText("Fim das imagens :(");
+        lbFile.setText(" ");
+    }
+
+    private void setImage(JLabel lbImage, JLabel lbFile, File[] files) {
+        lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
+        lbFile.setText(files[currentImage].getName());
     }
 
     public static void main(String[] args) {
