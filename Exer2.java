@@ -12,7 +12,6 @@ public class Exer2 {
 
     private JFrame frame;
     private int currentImage = 0;
-    private boolean EndOfImages = false;
 
     public Exer2() {
         frame = new JFrame("Images");
@@ -42,12 +41,15 @@ public class Exer2 {
         btLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentImage == 0) {
+                if (currentImage != -1) {
                     currentImage--;
+                }
+                if (currentImage == -1) {
                     lbImage.setIcon(null);
                     lbImage.setText("Fim das imagens :(");
                     lbFile.setText(" ");
-                } else {
+                }
+                if (currentImage >= 0) {
                     lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
                     lbFile.setText(files[currentImage].getName());
                 }
@@ -55,22 +57,22 @@ public class Exer2 {
         });
 
         btRight.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentImage++;
-                if (currentImage > 2) {
+                if (currentImage != 3) {
+                    currentImage++;
+                }
+                if (currentImage == 3) {
                     lbImage.setIcon(null);
                     lbImage.setText("Fim das imagens :(");
                     lbFile.setText(" ");
-                } else {
+                }
+                if (currentImage <= 2) {
                     lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
                     lbFile.setText(files[currentImage].getName());
                 }
             }
-
         });
-
     }
 
     public static void main(String[] args) {
