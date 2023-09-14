@@ -11,6 +11,8 @@ public class Exer2 {
 
     private JFrame frame;
     private int currentImage = 0;
+    private int nbImages;
+    File[] files = new File("images").listFiles();
 
     public Exer2() {
         frame = new JFrame("Images");
@@ -33,7 +35,9 @@ public class Exer2 {
         frame.add(btUpdate, BorderLayout.SOUTH);
         frame.add(lbImage, BorderLayout.CENTER);
 
-        File[] files = new File("images").listFiles();
+        // File[] files = new File("images").listFiles();
+        nbImages = files.length;
+        // updateFiles()
         lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
         lbFile.setText(files[currentImage].getName());
 
@@ -55,16 +59,27 @@ public class Exer2 {
         btRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentImage != 3) { // review hardcoded 3
+                if (currentImage != nbImages) { // review hardcoded 3
                     currentImage++;
                 }
-                if (currentImage == 3) {
+                if (currentImage == nbImages) {
                     clearImage(lbImage, lbFile);
                 }
-                if (currentImage <= 2) {
+                if (currentImage <= nbImages - 1) {
                     setImage(lbImage, lbFile, files);
                 }
             }
+        });
+
+        btUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                files = new File("images").listFiles();
+                nbImages = files.length;
+                currentImage = 0;
+                setImage(lbImage, lbFile, files);
+            }
+
         });
     }
 
