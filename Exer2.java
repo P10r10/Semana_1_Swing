@@ -12,9 +12,16 @@ public class Exer2 {
     private JFrame frame;
     private int currentImage = 0;
     private int nbImages;
-    File[] files = new File("images").listFiles();
+    private String path;
+    File[] files;
 
-    public Exer2() {
+    public Exer2(String path) {
+        this.path = path;
+        files = new File(path).listFiles();
+        if (files == null) {
+            System.out.println("Folder \"" + path + "\" not found!");
+            System.exit(1);
+        }
         frame = new JFrame("Images");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addFrameContent();
@@ -24,7 +31,7 @@ public class Exer2 {
 
     private void addFrameContent() {
         frame.setLayout(new BorderLayout());
-        JLabel lbFile = new JLabel("FILE NAME");
+        JLabel lbFile = new JLabel();
         JButton btLeft = new JButton("<");
         JButton btRight = new JButton(">");
         JButton btUpdate = new JButton("update");
@@ -35,9 +42,7 @@ public class Exer2 {
         frame.add(btUpdate, BorderLayout.SOUTH);
         frame.add(lbImage, BorderLayout.CENTER);
 
-        // File[] files = new File("images").listFiles();
         nbImages = files.length;
-        // updateFiles()
         lbImage.setIcon(new ImageIcon(files[currentImage].getAbsolutePath()));
         lbFile.setText(files[currentImage].getName());
 
@@ -59,7 +64,7 @@ public class Exer2 {
         btRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentImage != nbImages) { // review hardcoded 3
+                if (currentImage != nbImages) {
                     currentImage++;
                 }
                 if (currentImage == nbImages) {
@@ -74,12 +79,11 @@ public class Exer2 {
         btUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                files = new File("images").listFiles();
+                files = new File(path).listFiles();
                 nbImages = files.length;
                 currentImage = 0;
                 setImage(lbImage, lbFile, files);
             }
-
         });
     }
 
@@ -95,6 +99,7 @@ public class Exer2 {
     }
 
     public static void main(String[] args) {
-        new Exer2();
+        // args[0] must contain images folder
+        new Exer2(args[0]);
     }
 }
